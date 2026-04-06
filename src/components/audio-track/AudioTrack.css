@@ -1,0 +1,19 @@
+.audio-track {
+    width: 100%;
+    min-height: 60px;
+    position: relative;
+
+    background-color: black;
+
+    /* GRID */
+    background-image: 
+        linear-gradient(to right, rgba(128, 128, 128, 0.568) 1px, transparent 1px);
+
+    background-size: 100px 100%; /* 100px = 1 секунда */
+
+    border-bottom: 1px solid gray;
+}
+
+.audio-track {
+    min-width: 2000px; /* або динамічно */
+}

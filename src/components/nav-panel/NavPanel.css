@@ -1,0 +1,10 @@
+.navigation-panel-top {
+    width: 100%;
+    padding: 0 0.5rem;
+    padding-bottom: 2px;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+
+    border-bottom: 1px solid black;
+}

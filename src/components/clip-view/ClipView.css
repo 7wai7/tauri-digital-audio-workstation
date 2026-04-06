@@ -1,0 +1,12 @@
+.clip {
+  top: 5px;
+  height: 50px;
+  background-color: #4ade80;
+  border-radius: 4px;
+
+  transition: background-color 200ms;
+}
+
+.clip:hover {
+  background-color: #359c5b;
+}
