@@ -7,6 +7,9 @@ type Store = {
     trackOrder: string[];
 
     zoom: number;
+    duration: number;
+    currentTime: number;
+    setCurrentTime: (value: number) => void;
 
     moveClip: (clipId: string, toTrackId: string, start: number) => void;
 };
@@ -17,6 +20,9 @@ export const useStore = create<Store>((set) => ({
     trackOrder: storeMock.trackOrder,
 
     zoom: 10,
+    duration: 100,
+    currentTime: 10,
+    setCurrentTime: (value) => set({ currentTime: value }),
 
     moveClip: (clipId, toTrackId, start) =>
         set((state) => {

@@ -38,6 +38,18 @@ export const storeMock = {
       id: "track_6",
       clipIds: [],
     },
+    track_7: {
+      id: "track_7",
+      clipIds: [],
+    },
+    track_8: {
+      id: "track_8",
+      clipIds: [],
+    },
+    track_9: {
+      id: "track_9",
+      clipIds: [],
+    },
   },
 
   trackOrder: [
@@ -47,6 +59,9 @@ export const storeMock = {
     "track_4",
     "track_5",
     "track_6",
+    "track_7",
+    "track_8",
+    "track_9",
   ],
 
   clips: {
