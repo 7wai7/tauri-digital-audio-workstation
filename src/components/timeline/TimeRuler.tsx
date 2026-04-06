@@ -2,7 +2,11 @@ import { useMemo, useState } from "react";
 import { useStore } from "../../store";
 import { generateMarks } from "../../utils";
 
-export default function TimeRuler() {
+interface Props {
+    timelineRef: React.RefObject<HTMLDivElement | null>
+}
+
+export default function TimeRuler({ timelineRef }: Props) {
     const zoom = useStore(s => s.zoom);
     const duration = useStore(s => s.duration);
     const setCurrentTime = useStore(s => s.setCurrentTime);
@@ -25,10 +29,10 @@ export default function TimeRuler() {
                 e.currentTarget.setPointerCapture(e.pointerId);
             }}
             onPointerMove={(e) => {
-                if (!isDragging) return;
+                if (!isDragging || !timelineRef.current) return;
 
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left + e.currentTarget.scrollLeft;
+                const rect = timelineRef.current.getBoundingClientRect();
+                const x = e.clientX - rect.left + timelineRef.current.scrollLeft;
 
                 setCurrentTime(x / zoom);
             }}

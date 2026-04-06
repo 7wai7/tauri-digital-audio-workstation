@@ -44,9 +44,25 @@
   position: absolute;
   top: 0;
   bottom: 0;
+  width: 12px;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+
+.playhead-visible {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
   width: 2px;
-  background: red;
+  transform: translateX(-50%);
+  background-color: rgba(255, 0, 0, 0.561);
   pointer-events: none;
+  transition: background-color 200ms ease-in-out;
+}
+
+.playhead:hover .playhead-visible {
+  background-color: red;
 }
 
 .timeline-body {
