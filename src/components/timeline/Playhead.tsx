@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useStore } from "../../store";
+import { TIMELINE_OFFSET } from "../../constants";
 
 interface Props {
     timelineRef: React.RefObject<HTMLDivElement | null>
@@ -16,7 +17,7 @@ export default function Playhead({ timelineRef }: Props) {
             ref={timelineRef}
             className="playhead"
             style={{
-                left: currentTime * zoom,
+                left: (currentTime + TIMELINE_OFFSET) * zoom,
             }}
             onPointerDown={(e) => {
                 setIsDragging(true);
@@ -28,7 +29,7 @@ export default function Playhead({ timelineRef }: Props) {
                 const rect = timelineRef.current.getBoundingClientRect();
                 const x = e.clientX - rect.left + timelineRef.current.scrollLeft;
 
-                setCurrentTime(x / zoom);
+                setCurrentTime(x / zoom - TIMELINE_OFFSET);
             }}
             onPointerUp={() => setIsDragging(false)}
         >

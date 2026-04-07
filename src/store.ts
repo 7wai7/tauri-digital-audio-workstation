@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { storeMock } from "./data/__mock__";
+import { TIMELINE_OFFSET } from "./constants";
+import { clamp } from "./utils";
 
 type Store = {
     tracks: Record<string, Track>;
@@ -14,7 +16,7 @@ type Store = {
     moveClip: (clipId: string, toTrackId: string, start: number) => void;
 };
 
-export const useStore = create<Store>((set) => ({
+export const useStore = create<Store>((set, get) => ({
     tracks: storeMock.tracks,
     clips: storeMock.clips,
     trackOrder: storeMock.trackOrder,
@@ -22,7 +24,7 @@ export const useStore = create<Store>((set) => ({
     zoom: 10,
     duration: 100,
     currentTime: 10,
-    setCurrentTime: (value) => set({ currentTime: value }),
+    setCurrentTime: (value) => set({ currentTime: clamp(-TIMELINE_OFFSET, get().duration + TIMELINE_OFFSET, value) }),
 
     moveClip: (clipId, toTrackId, start) =>
         set((state) => {

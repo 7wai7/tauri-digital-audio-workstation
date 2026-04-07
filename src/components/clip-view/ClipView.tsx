@@ -1,3 +1,4 @@
+import { TIMELINE_OFFSET } from "../../constants";
 import { useStore } from "../../store";
 import "./ClipView.css"
 
@@ -10,7 +11,7 @@ export default function ClipView({ id }: { id: string }) {
             className="clip"
             style={{
                 position: "absolute",
-                left: clip.start * zoom,
+                left: (TIMELINE_OFFSET + clip.start) * zoom,
                 width: clip.duration * zoom,
             }}
         />

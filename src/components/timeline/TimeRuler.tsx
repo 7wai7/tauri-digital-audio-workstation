@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { useStore } from "../../store";
 import { generateMarks } from "../../utils";
+import { TIMELINE_OFFSET } from "../../constants";
 
 interface Props {
     timelineRef: React.RefObject<HTMLDivElement | null>
@@ -34,7 +35,7 @@ export default function TimeRuler({ timelineRef }: Props) {
                 const rect = timelineRef.current.getBoundingClientRect();
                 const x = e.clientX - rect.left + timelineRef.current.scrollLeft;
 
-                setCurrentTime(x / zoom);
+                setCurrentTime(x / zoom - TIMELINE_OFFSET);
             }}
             onPointerUp={() => setIsDragging(false)}
         >
@@ -42,7 +43,7 @@ export default function TimeRuler({ timelineRef }: Props) {
                 <div
                     key={t}
                     className="time-mark"
-                    style={{ left: t * zoom }}
+                    style={{ left: t * zoom + TIMELINE_OFFSET * zoom }}
                 >
                     {t}
                 </div>

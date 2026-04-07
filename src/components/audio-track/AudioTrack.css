@@ -13,7 +13,3 @@
 
     border-bottom: 1px solid gray;
 }
-
-.audio-track {
-    min-width: 2000px; /* або динамічно */
-}
