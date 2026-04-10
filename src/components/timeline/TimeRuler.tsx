@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useStore } from "../../store";
+import { useGlobalStore } from "../../stores/store";
 import { generateMarks } from "../../utils";
 import { TIMELINE_OFFSET } from "../../constants";
 
@@ -8,9 +8,9 @@ interface Props {
 }
 
 export default function TimeRuler({ timelineRef }: Props) {
-    const zoom = useStore(s => s.zoom);
-    const duration = useStore(s => s.duration);
-    const setCurrentTime = useStore(s => s.setCurrentTime);
+    const zoom = useGlobalStore(s => s.zoom);
+    const duration = useGlobalStore(s => s.duration);
+    const setCurrentTime = useGlobalStore(s => s.setCurrentTime);
 
     const [isDragging, setIsDragging] = useState(false);
 

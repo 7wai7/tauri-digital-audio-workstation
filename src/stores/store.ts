@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { storeMock } from "./data/__mock__";
-import { TIMELINE_OFFSET } from "./constants";
-import { clamp } from "./utils";
+import { storeMock } from "../data/__mock__";
+import { TIMELINE_OFFSET } from "../constants";
+import { clamp } from "../utils";
 
 type Store = {
     tracks: Record<string, Track>;
@@ -16,7 +16,7 @@ type Store = {
     moveClip: (clipId: string, toTrackId: string, start: number) => void;
 };
 
-export const useStore = create<Store>((set, get) => ({
+export const useGlobalStore = create<Store>((set, get) => ({
     tracks: storeMock.tracks,
     clips: storeMock.clips,
     trackOrder: storeMock.trackOrder,
@@ -46,7 +46,6 @@ export const useStore = create<Store>((set, get) => ({
                     clipIds: fromTrack.clipIds.filter(id => id !== clipId),
                 };
 
-                // 2. додати в новий трек
                 const toTrack = nextTracks[toTrackId];
                 nextTracks[toTrackId] = {
                     ...toTrack,

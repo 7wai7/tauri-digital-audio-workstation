@@ -1,8 +1,8 @@
-import { useStore } from "../store";
+import { useGlobalStore } from "../stores/store";
 import AudioTrack from "./audio-track/AudioTrack";
 
 export default function Tracks() {
-    const trackIds = useStore(s => s.trackOrder);
+    const trackIds = useGlobalStore(s => s.trackOrder);
 
     return (
         <>

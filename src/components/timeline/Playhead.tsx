@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useStore } from "../../store";
+import { useGlobalStore } from "../../stores/store";
 import { TIMELINE_OFFSET } from "../../constants";
 
 interface Props {
@@ -7,9 +7,9 @@ interface Props {
 }
 
 export default function Playhead({ timelineRef }: Props) {
-    const zoom = useStore(s => s.zoom);
-    const currentTime = useStore(s => s.currentTime);
-    const setCurrentTime = useStore(s => s.setCurrentTime);
+    const zoom = useGlobalStore(s => s.zoom);
+    const currentTime = useGlobalStore(s => s.currentTime);
+    const setCurrentTime = useGlobalStore(s => s.setCurrentTime);
     const [isDragging, setIsDragging] = useState(false);
 
     return (

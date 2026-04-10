@@ -1,6 +1,5 @@
 .audio-track {
     width: 100%;
-    min-height: 60px;
     position: relative;
 
     background-color: black;
@@ -12,4 +11,8 @@
     background-size: 100px 100%; /* 100px = 1 секунда */
 
     border-bottom: 1px solid gray;
+}
+
+.audio-track:hover {
+    background-color: rgb(42, 42, 42);
 }

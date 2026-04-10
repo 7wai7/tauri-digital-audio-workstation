@@ -16,23 +16,23 @@ export const storeMock = {
   tracks: {
     track_1: {
       id: "track_1",
-      clipIds: ["c1", "c2", "c3"],
+      clipIds: ["c1"],
     },
     track_2: {
       id: "track_2",
-      clipIds: ["c4", "c5", "c6"],
+      clipIds: [/* "c4", "c6" */],
     },
     track_3: {
       id: "track_3",
-      clipIds: ["c7", "c8", "c9", "c10"],
+      clipIds: [/* "c7", "c8", "c10" */],
     },
     track_4: {
       id: "track_4",
-      clipIds: ["c11", "c12", "c13"],
+      clipIds: [/* "c11", "c13" */],
     },
     track_5: {
       id: "track_5",
-      clipIds: ["c14", "c15", "c16", "c17", "c18"],
+      clipIds: [/* "c14", "c16", "c18" */],
     },
     track_6: {
       id: "track_6",
