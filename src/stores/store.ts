@@ -8,6 +8,13 @@ type Store = {
     clips: Record<string, Clip>;
     trackOrder: string[];
 
+    selectedClipsIds: Set<string>,
+    selectOnlyClip: (id: string) => void,
+    clearSelectedClips: () => void,
+    selectClip: (id: string) => void,
+    deselectClip: (id: string) => void,
+    toggleClip: (id: string) => void,
+
     zoom: number;
     duration: number;
     currentTime: number;
@@ -20,6 +27,37 @@ export const useGlobalStore = create<Store>((set, get) => ({
     tracks: storeMock.tracks,
     clips: storeMock.clips,
     trackOrder: storeMock.trackOrder,
+
+    selectedClipsIds: new Set,
+    selectOnlyClip: (id: string) =>
+        set({ selectedClipsIds: new Set([id]) }),
+
+    toggleClip: (id: string) =>
+        set((state) => {
+            const next = new Set(state.selectedClipsIds);
+            if (next.has(id)) next.delete(id);
+            else next.add(id);
+            return { selectedClipsIds: next };
+        }),
+
+    clearSelectedClips: () =>
+        set({ selectedClipsIds: new Set() }),
+
+    selectClip: (id) =>
+        set((state) => {
+            const next = new Set(state.selectedClipsIds);
+            next.add(id);
+
+            return { selectedClipsIds: next };
+        }),
+
+    deselectClip: (id) =>
+        set((state) => {
+            const next = new Set(state.selectedClipsIds);
+            next.delete(id);
+
+            return { selectedClipsIds: next };
+        }),
 
     zoom: 10,
     duration: 100,

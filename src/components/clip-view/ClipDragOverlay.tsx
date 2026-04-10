@@ -10,17 +10,24 @@ export default function ClipDragOverlay() {
 
     if (!drag || !preview) return null;
 
-    const clip = clips[drag.clipId];
-
     return (
-        <div
-            className="clip ghost dragging"
-            style={{
-                position: "absolute",
-                width: clip.duration * zoom,
-                height: TRACK_HEIGHT,
-                transform: `translate(${(TIMELINE_OFFSET + preview.previewStart) * zoom}px, ${preview.previewTrackIndex * TRACK_HEIGHT}px)`
-            }}
-        />
+        <>
+            {preview.map(item => {
+                const clip = clips[item.clipId];
+
+                return (
+                    <div
+                        key={item.clipId}
+                        className="clip ghost"
+                        style={{
+                            position: "absolute",
+                            width: clip.duration * zoom,
+                            height: TRACK_HEIGHT,
+                            transform: `translate(${(TIMELINE_OFFSET + item.start) * zoom}px, ${item.trackIndex * TRACK_HEIGHT}px)`
+                        }}
+                    />
+                );
+            })}
+        </>
     );
 }

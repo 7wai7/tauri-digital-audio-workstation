@@ -25,12 +25,18 @@ export default function Timeline() {
             onPointerMove={(e) => {
                 if (!timelineRef.current) return;
 
-                const rect = timelineRef.current.getBoundingClientRect();
+                const drag = useClipDragStore.getState().drag;
+                if (!drag) return;
+
+                const dx = e.clientX - drag.startX;
+                const dy = e.clientY - drag.startY;
+
+                if (Math.hypot(dx, dy) < 5) return;
 
                 updateDrag(
                     e.clientX,
                     e.clientY,
-                    rect,
+                    timelineRef.current.getBoundingClientRect(),
                     timelineRef.current.scrollTop
                 );
             }}
