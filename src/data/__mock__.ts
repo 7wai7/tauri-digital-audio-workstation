@@ -20,7 +20,7 @@ export const storeMock = {
     },
     track_2: {
       id: "track_2",
-      clipIds: [/* "c4", "c6" */],
+      clipIds: ["c4"],
     },
     track_3: {
       id: "track_3",
@@ -32,37 +32,17 @@ export const storeMock = {
     },
     track_5: {
       id: "track_5",
-      clipIds: [/* "c14", "c16", "c18" */],
+      clipIds: [/* "c14",asdfz "c16", "c18" */],
     },
-    track_6: {
-      id: "track_6",
-      clipIds: [],
-    },
-    track_7: {
-      id: "track_7",
-      clipIds: [],
-    },
-    track_8: {
-      id: "track_8",
-      clipIds: [],
-    },
-    track_9: {
-      id: "track_9",
-      clipIds: [],
-    },
+    ...Object.fromEntries(
+      Array.from({ length: 20 }).map((_, i) => {
+        const id = `track_${i + 6}`;
+        return [id, { id, clipIds: [] }];
+      })
+    )
   },
 
-  trackOrder: [
-    "track_1",
-    "track_2",
-    "track_3",
-    "track_4",
-    "track_5",
-    "track_6",
-    "track_7",
-    "track_8",
-    "track_9",
-  ],
+  trackOrder: [''],
 
   clips: {
     c1: createClip("c1", "track_1", 0, 4),
@@ -89,3 +69,5 @@ export const storeMock = {
     c18: createClip("c18", "track_5", 12, 2.7),
   },
 };
+
+storeMock.trackOrder = Object.keys(storeMock.tracks)

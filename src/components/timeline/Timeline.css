@@ -34,13 +34,6 @@
   pointer-events: none;
 }
 
-.time-ruler,
-.time-mark {
-  user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
-
 .playhead {
   position: absolute;
   top: 0;

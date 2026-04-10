@@ -1,7 +1,7 @@
 .clip {
     background-color: #4ade80;
     border-radius: 2px;
-    border: 1px solid transparent;
+    border: 2px solid transparent;
     z-index: 100;
 
     transition: all 200ms ease-in-out;
@@ -21,4 +21,8 @@
 .clip.ghost {
     opacity: 0.5;
     z-index: 1000;
+}
+
+.clip.selected {
+    border-color: rgba(255, 0, 0, 0.576);
 }
