@@ -45,7 +45,7 @@ export const storeMock = {
   trackOrder: [''],
 
   clips: {
-    c1: createClip("c1", "track_1", 0, 4),
+    c1: createClip("c1", "track_1", 0, 200),
     c2: createClip("c2", "track_1", 6, 3),
     c3: createClip("c3", "track_1", 12, 5),
 

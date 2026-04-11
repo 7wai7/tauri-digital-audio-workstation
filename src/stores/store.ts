@@ -8,15 +8,20 @@ type Store = {
     clips: Record<string, Clip>;
     trackOrder: string[];
 
-    selectedClipsIds: Set<string>,
-    selectOnlyClip: (id: string) => void,
-    clearSelectedClips: () => void,
-    selectClip: (id: string) => void,
-    deselectClip: (id: string) => void,
-    toggleClip: (id: string) => void,
+    addClip: (clip: Clip) => void;
+
+    selectedClipsIds: Set<string>;
+    selectOnlyClip: (id: string) => void;
+    clearSelectedClips: () => void;
+    selectClip: (id: string) => void;
+    deselectClip: (id: string) => void;
+    toggleClip: (id: string) => void;
 
     zoom: number;
+
     duration: number;
+    calculateDuration: () => void;
+
     currentTime: number;
     setCurrentTime: (value: number) => void;
 
@@ -27,6 +32,24 @@ export const useGlobalStore = create<Store>((set, get) => ({
     tracks: storeMock.tracks,
     clips: storeMock.clips,
     trackOrder: storeMock.trackOrder,
+
+    addClip: (clip) => {
+        set((state) => ({
+            clips: {
+                ...state.clips,
+                [clip.id]: clip
+            },
+            tracks: {
+                ...state.tracks,
+                [clip.trackId]: {
+                    ...state.tracks[clip.trackId],
+                    clipIds: [...state.tracks[clip.trackId].clipIds, clip.id]
+                }
+            }
+        }));
+
+        get().calculateDuration();
+    },
 
     selectedClipsIds: new Set,
     selectOnlyClip: (id: string) =>
@@ -60,11 +83,23 @@ export const useGlobalStore = create<Store>((set, get) => ({
         }),
 
     zoom: 10,
-    duration: 200,
+    duration: 100,
+    calculateDuration: () =>
+        set((state) => {
+            let max = 0;
+
+            for (const clip of Object.values(state.clips)) {
+                const end = clip.start + clip.duration;
+                if (end > max) max = end;
+            }
+
+            return { duration: max };
+        }),
+
     currentTime: 10,
     setCurrentTime: (value) => set({ currentTime: clamp(-TIMELINE_OFFSET, get().duration + TIMELINE_OFFSET, value) }),
 
-    moveClip: (clipId, toTrackId, start) =>
+    moveClip: (clipId, toTrackId, start) => {
         set((state) => {
             const clip = state.clips[clipId];
             if (!clip) return state;
@@ -104,5 +139,8 @@ export const useGlobalStore = create<Store>((set, get) => ({
                 tracks: nextTracks,
                 clips: nextClips,
             };
-        }),
+        });
+
+        get().calculateDuration();
+    }
 }));

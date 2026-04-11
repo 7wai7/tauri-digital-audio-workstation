@@ -12,6 +12,7 @@
 
 .timeline-content {
   position: relative;
+  overflow: hidden;
 }
 
 .time-ruler {

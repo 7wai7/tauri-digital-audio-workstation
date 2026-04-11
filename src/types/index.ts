@@ -10,9 +10,3 @@ type Clip = {
   start: number;
   duration: number;
 };
-
-type TrackLayout = {
-  id: string;
-  top: number;
-  bottom: number;
-};
