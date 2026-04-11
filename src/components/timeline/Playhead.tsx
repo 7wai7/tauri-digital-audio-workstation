@@ -12,6 +12,8 @@ export default function Playhead({ timelineRef }: Props) {
     const setCurrentTime = useGlobalStore(s => s.setCurrentTime);
     const [isDragging, setIsDragging] = useState(false);
 
+    console.log(currentTime)
+
     return (
         <div
             ref={timelineRef}

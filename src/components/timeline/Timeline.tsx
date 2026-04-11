@@ -16,11 +16,12 @@ export default function Timeline() {
     const endDrag = useClipDragStore(s => s.endDrag);
 
     return (
-        <section
-            ref={timelineRef}
-            className="timeline"
-            style={{
-                minWidth: `${(duration + TIMELINE_OFFSET * 2) * zoom}px`
+        <div
+            className="timeline-wrapper"
+            onPointerDown={(e) => {
+                if (!(e.target as HTMLElement).closest(".clip")) {
+                    useGlobalStore.getState().clearSelectedClips();
+                }
             }}
             onPointerMove={(e) => {
                 if (!timelineRef.current) return;
@@ -42,12 +43,20 @@ export default function Timeline() {
             }}
             onPointerUp={() => endDrag()}
         >
-            <TimeRuler timelineRef={timelineRef} />
-            <div className="timeline-body">
-                <Playhead timelineRef={timelineRef} />
-                <ClipDragOverlay />
-                <Tracks />
+            <div className="timeline-scroll">
+                <div
+                    className="timeline-content"
+                    ref={timelineRef}
+                    style={{
+                        minWidth: `${(duration + TIMELINE_OFFSET * 2) * zoom}px`
+                    }}
+                >
+                    <TimeRuler timelineRef={timelineRef} />
+                    <Playhead timelineRef={timelineRef} />
+                    <ClipDragOverlay />
+                    <Tracks />
+                </div>
             </div>
-        </section>
+        </div>
     )
 }

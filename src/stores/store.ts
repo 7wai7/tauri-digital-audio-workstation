@@ -60,7 +60,7 @@ export const useGlobalStore = create<Store>((set, get) => ({
         }),
 
     zoom: 10,
-    duration: 100,
+    duration: 200,
     currentTime: 10,
     setCurrentTime: (value) => set({ currentTime: clamp(-TIMELINE_OFFSET, get().duration + TIMELINE_OFFSET, value) }),
 

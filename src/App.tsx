@@ -5,10 +5,10 @@ import Timeline from "./components/timeline/Timeline";
 function App() {
 
   return (
-    <>
+    <div className="app">
       <NavPanel />
       <Timeline />
-    </>
+    </div>
   );
 }
 

@@ -24,7 +24,11 @@ export default function TimeRuler({ timelineRef }: Props) {
     return (
         <div
             className="time-ruler"
-            style={{ backgroundSize: `${zoom}px 100%` }}
+            style={{
+                backgroundSize: `${zoom}px 40%, ${zoom * 5}px 70%`,
+                backgroundPosition: `0 100%, 0 100%`,
+                backgroundRepeat: `repeat-x`
+            }}
             onPointerDown={(e) => {
                 setIsDragging(true);
                 e.currentTarget.setPointerCapture(e.pointerId);
