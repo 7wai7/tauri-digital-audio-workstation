@@ -26,6 +26,10 @@ type Store = {
     setCurrentTime: (value: number) => void;
 
     moveClip: (clipId: string, toTrackId: string, start: number) => void;
+
+    clipboard: Clip[];
+    copySelectedClips: () => void;
+    pasteClips: () => void;
 };
 
 export const useGlobalStore = create<Store>((set, get) => ({
@@ -142,5 +146,50 @@ export const useGlobalStore = create<Store>((set, get) => ({
         });
 
         get().calculateDuration();
-    }
+    },
+
+    clipboard: [],
+    copySelectedClips: () =>
+        set((state) => {
+            const clips = Array.from(state.selectedClipsIds).map(id => ({
+                ...state.clips[id]
+            }));
+
+            return { clipboard: clips };
+        }),
+
+    pasteClips: () =>
+        set((state) => {
+            if(state.clipboard.length === 0) return {};
+            
+            const newClips = { ...state.clips };
+            const newTracks = { ...state.tracks };
+            const selectedClipsIds = new Set<string>();
+
+            for (const clip of state.clipboard) {
+                const id = crypto.randomUUID();
+
+                const newClip = {
+                    ...clip,
+                    id,
+                    start: clip.start + 1,
+                };
+
+                newClips[id] = newClip;
+                selectedClipsIds.add(id);
+
+                const track = newTracks[newClip.trackId];
+
+                newTracks[newClip.trackId] = {
+                    ...track,
+                    clipIds: [...track.clipIds, id],
+                };
+            }
+
+            return {
+                clips: newClips,
+                tracks: newTracks,
+                selectedClipsIds,
+            };
+        }),
 }));
