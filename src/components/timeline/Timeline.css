@@ -12,7 +12,6 @@
 
 .timeline-content {
   position: relative;
-  overflow: hidden;
 }
 
 .time-ruler {
@@ -65,7 +64,13 @@
   background-color: red;
 }
 
-.playhead {
+
+
+
+.zero-tick {
   position: absolute;
-  z-index: 10;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(0, 255, 0, 0.3);
 }

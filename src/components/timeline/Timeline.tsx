@@ -55,6 +55,13 @@ export default function Timeline() {
                     <Playhead timelineRef={timelineRef} />
                     <ClipDragOverlay />
                     <Tracks />
+
+                    <div
+                        className="zero-tick"
+                        style={{
+                            left: TIMELINE_OFFSET * zoom
+                        }}
+                    />
                 </div>
             </div>
         </div>

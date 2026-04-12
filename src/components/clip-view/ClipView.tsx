@@ -54,7 +54,7 @@ export default function ClipView({ id }: { id: string }) {
         }
 
         if (selected) {
-            if(selectedClipsIds.size > 1) selectOnlyClip(id);
+            if (selectedClipsIds.size > 1) selectOnlyClip(id);
             else deselectClip(id);
         } else {
             selectOnlyClip(id);
@@ -72,6 +72,12 @@ export default function ClipView({ id }: { id: string }) {
             }}
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
-        />
+        >
+            <div className="clip-content">
+                <span className="clip-title">
+                    {clip.filePath.split("/").pop()}
+                </span>
+            </div>
+        </div>
     );
 }

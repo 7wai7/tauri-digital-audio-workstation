@@ -1,11 +1,35 @@
 .clip {
-    background-color: #4ade80;
+    background: #354760;
+    border: 1px solid #374151;
     border-radius: 2px;
-    border: 2px solid transparent;
+    color: #e5e7eb;
+    overflow: hidden;
+    font-size: 11px;
     z-index: 100;
 
     transition: all 200ms ease-in-out;
     transition-property: background-color, border-color;
+}
+
+.clip-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 2px 4px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.clip-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.8;
+}
+
+.clip.selected {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px #3b82f6 inset;
 }
 
 .clip:hover {
@@ -13,13 +37,8 @@
     border-color: #2a8f4f;
 }
 
-.clip.dragging {
-    position: absolute;
-    pointer-events: none;
-}
-
 .clip.ghost {
-    opacity: 0.5;
+    opacity: 0.7;
     z-index: 1000;
 }
 

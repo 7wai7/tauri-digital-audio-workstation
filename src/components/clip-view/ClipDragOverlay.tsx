@@ -25,7 +25,13 @@ export default function ClipDragOverlay() {
                             height: TRACK_HEIGHT,
                             transform: `translate(${(TIMELINE_OFFSET + item.start) * zoom}px, ${item.trackIndex * TRACK_HEIGHT}px)`
                         }}
-                    />
+                    >
+                        <div className="clip-content">
+                            <span className="clip-title">
+                                {clip.filePath.split("/").pop()}
+                            </span>
+                        </div>
+                    </div>
                 );
             })}
         </>
