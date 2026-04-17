@@ -2,11 +2,17 @@ import { create } from "zustand";
 import { storeMock } from "../data/__mock__";
 import { TIMELINE_OFFSET } from "../constants";
 import { clamp } from "../utils";
+import { audioService } from "../services/AudioService";
 
 type Store = {
     tracks: Record<string, Track>;
     clips: Record<string, Clip>;
     trackOrder: string[];
+
+    isPlaying: boolean;
+    play: () => void;
+    stop: () => void;
+    togglePlaying: () => void;
 
     addClip: (clip: Clip) => void;
 
@@ -34,8 +40,27 @@ type Store = {
 
 export const useGlobalStore = create<Store>((set, get) => ({
     tracks: storeMock.tracks,
-    clips: storeMock.clips,
+    clips: {},
     trackOrder: storeMock.trackOrder,
+
+    isPlaying: false,
+    play: async () => {
+        if (get().isPlaying) return;
+        await audioService.play(Object.values(get().clips), get().currentTime);
+        set({ isPlaying: true })
+    },
+
+    stop: () => {
+        if (!get().isPlaying) return;
+        audioService.stop()
+        set({ isPlaying: false })
+    },
+
+    togglePlaying: () => {
+        const { isPlaying, play, stop } = get();
+        if (isPlaying) stop();
+        else play()
+    },
 
     addClip: (clip) => {
         set((state) => ({
@@ -160,8 +185,8 @@ export const useGlobalStore = create<Store>((set, get) => ({
 
     pasteClips: () =>
         set((state) => {
-            if(state.clipboard.length === 0) return {};
-            
+            if (state.clipboard.length === 0) return {};
+
             const newClips = { ...state.clips };
             const newTracks = { ...state.tracks };
             const selectedClipsIds = new Set<string>();

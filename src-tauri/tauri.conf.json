@@ -19,7 +19,19 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "capabilities": [
+        {
+          "identifier": "main-capability",
+          "windows": [
+            "main"
+          ],
+          "permissions": [
+            "dialog:default",
+            "fs:default"
+          ]
+        }
+      ]
     }
   },
   "bundle": {

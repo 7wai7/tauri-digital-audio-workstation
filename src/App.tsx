@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const isCmd = e.metaKey || e.ctrlKey;
-      
+
       if (isCmd && e.key === "c") {
         e.preventDefault();
         useGlobalStore.getState().copySelectedClips();
@@ -18,6 +18,11 @@ function App() {
       if (isCmd && e.key === "v") {
         e.preventDefault();
         useGlobalStore.getState().pasteClips();
+      }
+
+      if (e.key === " ") {
+        e.preventDefault();
+        useGlobalStore.getState().togglePlaying();
       }
     };
 

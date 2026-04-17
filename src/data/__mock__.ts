@@ -16,11 +16,11 @@ export const storeMock = {
   tracks: {
     track_1: {
       id: "track_1",
-      clipIds: ["c1"],
+      clipIds: [],
     },
     track_2: {
       id: "track_2",
-      clipIds: ["c4"],
+      clipIds: [],
     },
     track_3: {
       id: "track_3",

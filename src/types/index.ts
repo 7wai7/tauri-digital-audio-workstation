@@ -10,3 +10,10 @@ type Clip = {
   start: number;
   duration: number;
 };
+
+type ClipRuntime = {
+  buffer: AudioBuffer;
+  start: number;
+  duration: number;
+  // filePath: string;
+};
