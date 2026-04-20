@@ -12,11 +12,8 @@ export default function NavPanel() {
             filters: [{ name: "Audio", extensions: ["mp3", "wav"] }]
         });
 
-        console.log(path);
-
         if(path) {
             const data: Clip = await invoke("import_audio", { path });
-            console.log(data)
             addClip(data)
         }
     };

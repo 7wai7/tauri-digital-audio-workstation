@@ -40,7 +40,7 @@ type Store = {
 
 export const useGlobalStore = create<Store>((set, get) => ({
     tracks: storeMock.tracks,
-    clips: {},
+    clips: storeMock.clips,
     trackOrder: storeMock.trackOrder,
 
     isPlaying: false,

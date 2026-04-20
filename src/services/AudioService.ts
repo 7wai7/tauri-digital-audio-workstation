@@ -66,6 +66,12 @@ class AudioService {
         this.buffers.set(path, buffer);
         return buffer;
     }
+
+    async loadAudioFromUrl(url: string) {
+        const res = await fetch(url);
+        const buffer = await res.arrayBuffer();
+        return await this.ctx.decodeAudioData(buffer);
+    }
 }
 
 export const audioService = new AudioService();
