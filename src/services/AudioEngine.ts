@@ -1,6 +1,6 @@
 import { readFile } from "@tauri-apps/plugin-fs";
 
-class AudioService {
+class AudioEngine {
     private ctx = new AudioContext();
     private playStartTime = 0;
     private sources: AudioBufferSourceNode[] = [];
@@ -68,4 +68,4 @@ class AudioService {
     }
 }
 
-export const audioService = new AudioService();
+export const audioEngine = new AudioEngine();

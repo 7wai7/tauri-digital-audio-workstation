@@ -43,7 +43,7 @@
   z-index: 1000;
   top: 0;
   bottom: 0;
-  width: 20px;
+  width: 12px;
   transform: translateX(-50%);
   cursor: pointer;
 }

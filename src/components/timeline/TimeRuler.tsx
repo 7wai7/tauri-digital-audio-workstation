@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useGlobalStore } from "../../stores/store";
 import { generateMarks } from "../../utils";
 import { TIMELINE_OFFSET } from "../../constants";
-import { audioService } from "../../services/AudioService";
+import { audioEngine } from "../../services/AudioEngine";
 
 interface Props {
     timelineRef: React.RefObject<HTMLDivElement | null>
@@ -44,7 +44,7 @@ export default function TimeRuler({ timelineRef }: Props) {
                 setCurrentTime(time);
 
                 if (useGlobalStore.getState().isPlaying) {
-                    audioService.seek(
+                    audioEngine.seek(
                         Object.values(useGlobalStore.getState().clips),
                         time
                     );

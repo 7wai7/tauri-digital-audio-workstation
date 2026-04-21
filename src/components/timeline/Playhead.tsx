@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGlobalStore } from "../../stores/store";
 import { TIMELINE_OFFSET } from "../../constants";
-import { audioService } from "../../services/AudioService";
+import { audioEngine } from "../../services/AudioEngine";
 
 interface Props {
     timelineRef: React.RefObject<HTMLDivElement | null>
@@ -18,7 +18,7 @@ export default function Playhead({ timelineRef }: Props) {
 
         function tick() {
             if (useGlobalStore.getState().isPlaying) {
-                const time = audioService.getCurrentTime();
+                const time = audioEngine.getCurrentTime();
                 setCurrentTime(time);
             }
 
@@ -53,7 +53,7 @@ export default function Playhead({ timelineRef }: Props) {
                 setCurrentTime(time);
 
                 if (useGlobalStore.getState().isPlaying) {
-                    audioService.seek(
+                    audioEngine.seek(
                         Object.values(useGlobalStore.getState().clips),
                         time
                     );

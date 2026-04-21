@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { storeMock } from "../data/__mock__";
 import { TIMELINE_OFFSET } from "../constants";
 import { clamp } from "../utils";
-import { audioService } from "../services/AudioService";
+import { audioEngine } from "../services/AudioEngine";
+import { projectService } from "../services/ProjectService";
 
 type Store = {
     tracks: Record<string, Track>;
@@ -46,13 +47,13 @@ export const useGlobalStore = create<Store>((set, get) => ({
     isPlaying: false,
     play: async () => {
         if (get().isPlaying) return;
-        await audioService.play(Object.values(get().clips), get().currentTime);
+        await audioEngine.play(Object.values(get().clips), get().currentTime);
         set({ isPlaying: true })
     },
 
     stop: () => {
         if (!get().isPlaying) return;
-        audioService.stop()
+        audioEngine.stop()
         set({ isPlaying: false })
     },
 
@@ -114,107 +115,36 @@ export const useGlobalStore = create<Store>((set, get) => ({
     zoom: 10,
     duration: 100,
     calculateDuration: () =>
-        set((state) => {
-            let max = 0;
+        set((state) => ({ duration: projectService.calculateDuration(state.clips) })),
 
-            for (const clip of Object.values(state.clips)) {
-                const end = clip.start + clip.duration;
-                if (end > max) max = end;
-            }
-
-            return { duration: max };
-        }),
-
-    currentTime: 10,
+    currentTime: 0,
     setCurrentTime: (value) => set({ currentTime: clamp(-TIMELINE_OFFSET, get().duration + TIMELINE_OFFSET, value) }),
 
     moveClip: (clipId, toTrackId, start) => {
-        set((state) => {
-            const clip = state.clips[clipId];
-            if (!clip) return state;
-
-            const fromTrackId = clip.trackId;
-
-            if (fromTrackId === toTrackId && clip.start === start) {
-                return state;
-            }
-
-            const nextTracks = { ...state.tracks };
-
-            if (fromTrackId !== toTrackId) {
-                const fromTrack = nextTracks[fromTrackId];
-                nextTracks[fromTrackId] = {
-                    ...fromTrack,
-                    clipIds: fromTrack.clipIds.filter(id => id !== clipId),
-                };
-
-                const toTrack = nextTracks[toTrackId];
-                nextTracks[toTrackId] = {
-                    ...toTrack,
-                    clipIds: [...toTrack.clipIds, clipId],
-                };
-            }
-
-            const nextClips = {
-                ...state.clips,
-                [clipId]: {
-                    ...clip,
-                    start,
-                    trackId: toTrackId,
-                },
-            };
-
-            return {
-                tracks: nextTracks,
-                clips: nextClips,
-            };
-        });
-
+        set((state) => projectService.moveClip(state.tracks, state.clips, toTrackId, clipId, start));
         get().calculateDuration();
     },
 
     clipboard: [],
-    copySelectedClips: () =>
-        set((state) => {
-            const clips = Array.from(state.selectedClipsIds).map(id => ({
-                ...state.clips[id]
-            }));
+    copySelectedClips: () => {
+        const state = get();
+        const clipboard = projectService.copy(state.clips, state.selectedClipsIds);
+        set({ clipboard });
+    },
 
-            return { clipboard: clips };
-        }),
+    pasteClips: () => {
+        const state = get();
+        if (state.clipboard.length === 0) return;
 
-    pasteClips: () =>
-        set((state) => {
-            if (state.clipboard.length === 0) return {};
+        const result = projectService.paste(
+            state.clips,
+            state.tracks,
+            state.clipboard
+        );
 
-            const newClips = { ...state.clips };
-            const newTracks = { ...state.tracks };
-            const selectedClipsIds = new Set<string>();
+        set(result);
 
-            for (const clip of state.clipboard) {
-                const id = crypto.randomUUID();
-
-                const newClip = {
-                    ...clip,
-                    id,
-                    start: clip.start + 1,
-                };
-
-                newClips[id] = newClip;
-                selectedClipsIds.add(id);
-
-                const track = newTracks[newClip.trackId];
-
-                newTracks[newClip.trackId] = {
-                    ...track,
-                    clipIds: [...track.clipIds, id],
-                };
-            }
-
-            return {
-                clips: newClips,
-                tracks: newTracks,
-                selectedClipsIds,
-            };
-        }),
+        const duration = projectService.calculateDuration(get().clips);
+        set({ duration });
+    }
 }));
